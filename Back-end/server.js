@@ -11,6 +11,9 @@ dotenv.config()
 
 const port = process.env.PORT
 
+//this line is used to get the data that is being sent through json from frontend. (parse incoming JSON payloads from HTTP requests) 
+chatWeb.use(express.json());
+
 chatWeb.use("/v1/auth", authenticateRoutes);
 
 chatWeb.listen(port, ()=>{
