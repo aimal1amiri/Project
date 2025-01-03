@@ -19,7 +19,7 @@
 ###
 
 <div align="center">
-  <img height="700" src="https://github.com/aimal1amiri/web-project1/blob/master/product.png"  />
+  
 </div>
 
 ###
