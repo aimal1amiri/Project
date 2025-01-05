@@ -2,8 +2,41 @@ import UserSchema from "../databaseSchema/userSchema.js"
 import { generateJWT } from "../lib/token.js"
 import bcrypt from "bcryptjs"
 
-export const login= (req,res)=> {
-    res.send("login")
+export const login= async (req,res)=> {
+    
+    const {email,password}=req.body;
+    
+    try {
+
+        const userEmail= await UserSchema.findOne({email})
+
+        const userPass = await bcrypt.compare(password, userEmail.password);
+
+        if(!userEmail || !userPass){
+            return res.status(400).json({success:false, message:"Invalid Credientials"})
+        }else{
+
+            generateJWT(userEmail._id,res);
+
+            return res.status(200).json({success:true,message:"login successfully", data:{
+
+                _id:userEmail._id,
+                fullName: userEmail.fullName,
+                email:userEmail.email,
+                profilePic:userEmail.profilePic
+
+            }})
+
+        }
+
+
+        
+    } catch (error) {
+
+        console.log("login error: ", error.message)
+        res.status(500).json({success:false, message:"Server Error"})
+        
+    }
 }
 
 export const signup = async (req,res)=> {
@@ -23,6 +56,10 @@ export const signup = async (req,res)=> {
         if (emailExist){
             return res.status(400).json({success:false, message:"Email is already existed"});
 
+        }
+
+        if(!fullName || !email || !password){
+            return res.status(400).json({success:false, message:"Please fill the necessary inputs"});
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -73,5 +110,20 @@ export const signup = async (req,res)=> {
 }
 
 export const logout = (req,res)=> {
-    res.send("logout")
+
+    try {
+        
+        res.clearCookie("chatWebJWT")
+        res.status(200).json({success:true, message:"Logout successfully"})
+
+    } catch (error) {
+
+        console.log("logout error: ",error.message)
+        res.status(500).json({success:false, message:"Server Error"})
+        
+    }
+}
+
+export const profileUpdate = async (req,res) => {
+    
 }
