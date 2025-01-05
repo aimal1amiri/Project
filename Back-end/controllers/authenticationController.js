@@ -1,4 +1,5 @@
 import UserSchema from "../databaseSchema/userSchema.js"
+import cloudinary from "../lib/profile-pic-cloudnary.js";
 import { generateJWT } from "../lib/token.js"
 import bcrypt from "bcryptjs"
 
@@ -125,5 +126,33 @@ export const logout = (req,res)=> {
 }
 
 export const profileUpdate = async (req,res) => {
+
+    try {
+        
+        const {profilePic}=req.body;
+
+        const userID = req.body.userVerify._id
+
+        if(!profilePic){
+            return res.status(400).json({message:"Profile picture is required"});
+        }
+
+        const userPicUpload = await cloudinary.uploader.upload(profilePic)
+
+        const updateDatabaseMDB= await UserSchema.findByIdAndUpdate(userID, {profilePic:userPicUpload.secure_url}, {new:true})
+
+
+        res.status(200).json({success:true, message:"Profile picture is updated", data:{updateDatabaseMDB}})
+
+
+
+
+    } catch (error) {
+
+        res.status(500).json({success:false, message:"Server Error"});
+
+        console.log(error.message);
+        
+    }
     
 }
