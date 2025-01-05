@@ -7,12 +7,16 @@ export const routeProtection = async (req,res,next) =>{
         
         const assignToken = req.cookies.chatWebJWT
 
+        //console.log(assignToken)
+
         if(!assignToken){
             return res.status(401).json({message:"Unauthorized"})
         }
 
         //we decoding the token to verify
-        const tokenDecode = chatWebJWT.verify(assignToken, process.env.JWT_KEY)
+        const tokenDecode = jwt.verify(assignToken, process.env.JWT_KEY)
+
+        //console.log(tokenDecode)
 
         if(!tokenDecode){
             return res.status(401).json({success:false, message:"Unauthorized"})
@@ -26,7 +30,7 @@ export const routeProtection = async (req,res,next) =>{
 
         }
 
-        req.userVerify = user
+        req.user = userVerify
 
         next()
 

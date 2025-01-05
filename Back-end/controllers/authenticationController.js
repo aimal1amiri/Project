@@ -131,7 +131,7 @@ export const profileUpdate = async (req,res) => {
         
         const {profilePic}=req.body;
 
-        const userID = req.body.userVerify._id
+        const userID = req.body.user._id
 
         if(!profilePic){
             return res.status(400).json({message:"Profile picture is required"});
@@ -155,4 +155,18 @@ export const profileUpdate = async (req,res) => {
         
     }
     
+}
+
+export const checkingAuth = async (req,res) => {
+
+    try {
+        
+        res.status(200).json(req.user);
+
+    } catch (error) {
+
+        res.status(500).json({message:"Server Error"})
+        
+    }
+
 }
