@@ -3,7 +3,9 @@ import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
 
 import authenticateRoutes from "./routes/authenticateRoutes.js"
+
 import { databaseConnect } from "./lib/database.js";
+import messageRoutes from "./routes/messageRoutes.js"
 
 
 const chatWeb=express();
@@ -17,6 +19,7 @@ chatWeb.use(express.json());
 chatWeb.use(cookieParser());
 
 chatWeb.use("/v1/auth", authenticateRoutes);
+chatWeb.use("/v1/message",messageRoutes);
 
 chatWeb.listen(port, ()=>{
     console.log("server is running on port: ", port);
