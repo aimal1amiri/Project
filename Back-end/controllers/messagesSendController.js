@@ -19,7 +19,7 @@ export const messageSend = async (req , res)=>{
         }
 
         const newMessage = new MessageSchema({
-            senderId,
+            logedInUserId,
             receverId,
             text,
             image:imageUrl
