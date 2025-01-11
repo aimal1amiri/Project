@@ -13,16 +13,23 @@ export const authGlobalState = create((set) => ({
         try {
             
             const response = await axiosURL.get("/v1/auth/authCheck")
+            //console.log("response: ",response)
 
             set({authUser:response.data})
 
         } catch (error) {
             set({authUser:null})
-            console.log("error in authGlobalState. verifyAuth: ",error);
+            //console.log("error in authGlobalState. verifyAuth: ",error);
             
         } finally{
             set({authChecking:false});
         }
+    },
+
+    signup: async(data) => {
+
+
+
     }
 
     
