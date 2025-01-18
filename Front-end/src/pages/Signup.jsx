@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import { authGlobalState } from '../globalState/authGlobalState';
-import {Eye, EyeOff, Lock, Mail, MessageSquare, User} from 'lucide-react'
+import {Eye, EyeOff, Link2, Lock, Mail, MessageSquare, User} from 'lucide-react'
+import {Link} from 'react-router-dom'
+import SignupChatBubble from '../components/SignupChatBubble';
+import {toast} from 'react-hot-toast'
+
+
 
 const Signup = () => {
 
@@ -15,12 +20,53 @@ const Signup = () => {
 
   const {signup, signingUp}= authGlobalState();
 
-  const validateInputs = () =>{}
+  const loading= false
+
   
-  const handleSubmit = () =>{}
+
+  const validateInputs = () =>{
+    if(!formData.fullName.trim()){
+      return (
+        toast.error("Full Name is required")
+      )
+    }
+    if(!formData.email.trim()){
+      return (
+        toast.error('Email is required')
+      )
+    }
+    if(!/\S+@\S+\.\S+/.test(formData.email)){
+      return (
+        toast.error('Email is invalid')
+      )
+    }
+    if(!formData.password.trim()){
+      return (
+        toast.error('Password is required')
+      )
+    }
+    if(formData.password.length < 8){
+      return (
+        toast.error('Password must be at least 8 characters')
+      )
+    } 
+
+    return true;
+  }
+  
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+
+    if(validateInputs()){
+      return toast.success('All inputs are valid')
+    };
+  }
+
+  
  
   return (
     <div className='min-h-screen grid lg:grid-cols-2 '>
+      
 
       <div className='flex flex-col justify-center items-center p-6 sm:p-12'>
         <div className='w-full max-w-md space-y-8'>
@@ -84,15 +130,46 @@ const Signup = () => {
                 </button>
               </div>
             </div>
+
+            
+            <button className="btn glass bg-amber-600 text-black btn-block hover:text-orange-500 " type='submit' disabled={signingUp} >
+            {signingUp ?(
+                <>
+                <span className="loading loading-infinity loading-lg"></span>
+                
+                <p className='text-orange-500'>Creating...</p>
+                </>
+
+              ):(
+                "Create Account"
+              ) }
+            </button>
             
           </form>
+
+          <div className=' flex'>
+            <Link2 className='mr-20'></Link2>
+            <p className='text-center text-base-content/60 '>
+            Already have an account? {" "}
+            <Link to="/login" className='link text-orange-500'>
+            Login
+            </Link>            
+            </p>
+            <Link2 className='ml-24'></Link2>
+          </div>
         </div>
+      </div>
+
+      <div className='h-screen bg-base-200 p-6 sm:p-12'>
+
+      <SignupChatBubble className='justify-center'/>
       </div>
 
       
 
 
     </div>
+   
   )
 }
 
