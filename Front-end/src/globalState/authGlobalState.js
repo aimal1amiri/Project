@@ -1,5 +1,6 @@
 import {create} from 'zustand'
 import { axiosURL } from '../lib/Backnd-info-fetching.js'
+import toast from 'react-hot-toast'
 
 export const authGlobalState = create((set) => ({
     authUser:null,
@@ -27,8 +28,24 @@ export const authGlobalState = create((set) => ({
     },
 
     signup: async(data) => {
+        
+        set({signingUp:true})
 
+        try {
+            console.log(data)
+            const response = await axiosURL.post('/v1/auth/signup',data)
+            console.log("response: ",response)
 
+            toast.success(data.response.data.message);
+            set({authUser:response.data})
+
+        } catch (error) {
+
+            toast.error(error.response.data.message)
+            
+        }finally{
+            set({signingUp:false})
+        }
 
     }
 
