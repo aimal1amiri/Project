@@ -3,7 +3,7 @@ import { authGlobalState } from '../globalState/authGlobalState';
 import {Eye, EyeOff, Link2, Lock, Mail, MessageSquare, User} from 'lucide-react'
 import {Link} from 'react-router-dom'
 import SignupChatBubble from '../components/SignupChatBubble';
-import {toast} from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 
 
@@ -20,45 +20,43 @@ const Signup = () => {
 
   const {signup, signingUp}= authGlobalState();
 
-  const loading= false
+  
 
   
 
-  const validateInputs = () =>{
-    if(!formData.fullName.trim()){
-      return (
-        toast.error("Full Name is required")
-      )
+  const validateInputs = () => {
+    if (!formData.fullName.trim()) {
+      toast.error("Full Name is required");
+      
+      return false;
     }
-    if(!formData.email.trim()){
-      return (
-        toast.error('Email is required')
-      )
+    if (!formData.email.trim()) {
+      toast.error("Email is required");
+      return false;
     }
-    if(!/\S+@\S+\.\S+/.test(formData.email)){
-      return (
-        toast.error('Email is invalid')
-      )
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      toast.error("Email is invalid");
+      return false;
     }
-    if(!formData.password.trim()){
-      return (
-        toast.error('Password is required')
-      )
+    if (!formData.password.trim()) {
+      toast.error("Password is required");
+      return false;
     }
-    if(formData.password.length < 8){
-      return (
-        toast.error('Password must be at least 8 characters')
-      )
-    } 
-
-    return true;
-  }
+    if (formData.password.length < 8) {
+      toast.error("Password must be at least 8 characters");
+      return false;
+    }
+    return true; 
+  };
   
   const handleSubmit = (e) =>{
     e.preventDefault();
 
-    if(validateInputs()){
-      return toast.success('All inputs are valid')
+    const isValid= validateInputs();
+
+    if(isValid){
+      signup(formData);
+      
     };
   }
 

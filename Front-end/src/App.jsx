@@ -8,6 +8,7 @@ import Profile from './pages/Profile'
 import Setting from './pages/Setting'
 import { authGlobalState } from './globalState/authGlobalState'
 import {Loader} from 'lucide-react'
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
 
@@ -43,6 +44,7 @@ const App = () => {
     <div>
       
       <Navbar />
+      <Toaster/>
         <Routes>
           <Route path='/' element={authUser ? <MainPage /> : <Navigate to="/login" /> } />
           <Route path='/signup' element={!authUser ? <Signup /> : <Navigate to="/" />} />
