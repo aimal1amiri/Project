@@ -1,6 +1,7 @@
 import {create} from 'zustand'
 import { axiosURL } from '../lib/Backnd-info-fetching.js'
 import toast from 'react-hot-toast'
+import axios from 'axios'
 
 export const authGlobalState = create((set) => ({
     authUser:null,
@@ -32,14 +33,17 @@ export const authGlobalState = create((set) => ({
         set({signingUp:true})
 
         try {
-            console.log(data)
+            
             const response = await axiosURL.post('/v1/auth/signup',data)
             console.log("response: ",response)
 
-            toast.success(data.response.data.message);
+
+
+            toast.success(response.data.message);
             set({authUser:response.data})
 
         } catch (error) {
+            console.log("error: ",error)
 
             toast.error(error.response.data.message)
             
@@ -47,6 +51,22 @@ export const authGlobalState = create((set) => ({
             set({signingUp:false})
         }
 
+    },
+
+    logout: async()=>{
+        try {
+            const response =await axiosURL.post("/v1/auth/logout");
+            set({authUser:null});
+
+            toast.success(response.message)
+        } catch (error) {
+
+            toast.error(error.response.data.message)
+            
+        }
+    },
+    login:async(data)=>{
+        
     }
 
     
