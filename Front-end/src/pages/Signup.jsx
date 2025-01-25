@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { authGlobalState } from '../globalState/authGlobalState';
-import {Eye, EyeOff, Link2, Lock, Mail, MessageSquare, User} from 'lucide-react'
+import {Eye, EyeOff, Link2, LoaderCircle, Lock, Mail, MessageCircleMore, MessageSquare, User} from 'lucide-react'
 import {Link} from 'react-router-dom'
 import SignupChatBubble from '../components/SignupChatBubble';
 import toast from 'react-hot-toast'
@@ -71,7 +71,8 @@ const Signup = () => {
           <div className='text-center mb-8'>
             <div className='flex flex-col items-center gap-2 group'>
               <div className='size-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 translation-colors'>
-              <MessageSquare className='size-6 text-primary' color="#ff7800"/>
+              {signingUp ? (<LoaderCircle className='size-6 text-primary animate-spin' color="#ff7800"/>) : (<MessageCircleMore className='size-6 text-primary' color="#ff7800"/>) }
+               
               </div>
               <h1 className='text-2xl font-bold mt-2'>Create an <span className='text-amber-600'>Account</span></h1>
               <p className='text-base-content/60'>Creating an account is free. Enjoy it!</p>
@@ -133,9 +134,9 @@ const Signup = () => {
             <button className="btn glass bg-amber-600 text-black btn-block hover:text-orange-500 " type='submit' disabled={signingUp} >
             {signingUp ?(
                 <>
-                <span className="loading loading-infinity loading-lg"></span>
+                <span className="loading loading-infinity loading-lg "></span>
                 
-                <p className='text-orange-500'>Creating...</p>
+                <p className='text-orange-500 animate-bounce'>Creating...</p>
                 </>
 
               ):(
