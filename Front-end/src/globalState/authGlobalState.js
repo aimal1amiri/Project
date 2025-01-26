@@ -66,6 +66,20 @@ export const authGlobalState = create((set) => ({
         }
     },
     login:async(data)=>{
+        set({loggingIn:true})
+
+        try {
+            const response= await axiosURL.post("/v1/auth/login",data)
+            set({authUser:response.data})
+
+            toast.success(response.data.message)
+        } catch (error) {
+
+            toast.error(error.response.data.message)
+            
+        }finally{
+            set({loggingIn:false})
+        }
         
     }
 
