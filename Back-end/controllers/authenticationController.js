@@ -130,8 +130,12 @@ export const profileUpdate = async (req,res) => {
     try {
         
         const {profilePic}=req.body;
+        //console.log("backend profile ppic: ", profilePic)
 
+        console.log("userID backend: ",req.body._id)
         const userID = req.body.user._id
+
+        
 
         if(!profilePic){
             return res.status(400).json({message:"Profile picture is required"});

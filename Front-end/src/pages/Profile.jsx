@@ -1,12 +1,25 @@
 import React from 'react'
 import { authGlobalState } from '../globalState/authGlobalState'
-import {Camera} from 'lucide-react'
+import {Camera, Mail, User} from 'lucide-react'
 
 const Profile = () => {
 
-  const {authUser, changingProfile}= authGlobalState();
+  const {authUser, changingProfile, uploadImage}= authGlobalState();
 
-  const uploadingImage= async(e)=>{}
+  const uploadingImage= async(e)=>{
+    const imageFile=e.target.files[0]
+
+    if(!imageFile) return;
+
+    const imageFileReader= new FileReader();
+
+    imageFileReader.readAsDataURL(imageFile);
+
+   imageFileReader.onload = async()=>{
+    const image = imageFileReader.result;
+    await uploadImage({profilePic: image})
+    }
+  }
 
 
   return (
@@ -43,6 +56,45 @@ const Profile = () => {
             <p className='text-sm text-zinc-400'>
               {changingProfile ? "Changing Profile..." :"Click the camera icon to change your profile picture."}
             </p>
+          </div>
+
+          <div className='space-y-6'>
+            <div className='space-y-1.5'>
+              <div className='text-sm text-zinc-400 flex items-center gap-2'>
+                <User className='w-4 h-4'/>
+                Full Name
+              </div>
+
+              <p className='px-4 py-2.5 bg-base-200 rounded-lg border font-bold'>
+                {authUser?.fullName}
+              </p>
+            </div>
+
+            <div className='space-y-1.5'>
+              <div className='text-sm text-zinc-400 flex items-center gap-2 '>
+                <Mail className='w-4 h-4'/>
+                Email 
+              </div>
+
+              <p className='px-4 py-2.5 bg-base-200 rounded-lg border font-bold'>{authUser?.email}</p>
+            </div>
+          </div>
+
+          <div className='mt-6 bg-base-300 rounded-xl p-6'>
+            <h2 className='text-lg font-medium mb-4'>
+              Account Information
+            </h2>
+
+            <div className='space-y-3 text-sm'>
+              <div className='flex items-center justify-between py-2 border-b border-zinc-700 font-bold'>
+                <span>Member Since</span>
+                <span>{authUser.createdAt?.split("T")[0]}</span>
+              </div>
+              <div className='flex items-center justify-between py-2'>
+                <span>Account Status</span>
+                <span className='text-green-500 font-bold'>Active</span>
+              </div>
+            </div>
           </div>
         </div>
 
