@@ -81,6 +81,25 @@ export const authGlobalState = create((set) => ({
             set({loggingIn:false})
         }
         
+    },
+
+    uploadImage:async(data)=>{
+
+        set({changingProfile:true})
+        console.log("data: ",data)
+
+        try {
+            const response= await axiosURL.put('/v1/auth/profileUpdate',data)
+            console.log("response: ",response)
+            set({authUser:response.data});
+            toast.success(response.data.message);
+        } catch (error) {
+            toast.error(error.response.data.message);
+            
+        }finally{
+            set({changingProfile:false})
+        }
+
     }
 
     
