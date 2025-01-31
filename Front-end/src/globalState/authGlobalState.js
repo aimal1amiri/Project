@@ -17,7 +17,7 @@ export const authGlobalState = create((set) => ({
             const response = await axiosURL.get("/v1/auth/authCheck")
             //console.log("response: ",response)
 
-            set({authUser:response.data})
+            set({authUser:response?.data})
 
         } catch (error) {
             set({authUser:null})
@@ -58,7 +58,9 @@ export const authGlobalState = create((set) => ({
             const response =await axiosURL.post("/v1/auth/logout");
             set({authUser:null});
 
-            toast.success(response.message)
+            //console.log(response)
+
+            toast.success(response.data.message)
         } catch (error) {
 
             toast.error(error.response.data.message)
@@ -70,7 +72,10 @@ export const authGlobalState = create((set) => ({
 
         try {
             const response= await axiosURL.post("/v1/auth/login",data)
-            set({authUser:response.data})
+            
+            set({authUser:response?.data.data})
+            
+            
 
             toast.success(response.data.message)
         } catch (error) {
