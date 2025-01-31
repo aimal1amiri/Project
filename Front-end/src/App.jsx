@@ -19,7 +19,7 @@ const App = () => {
     
   }, [verifyAuth]);
 
-  console.log("authUser: ",authUser);
+  console.log("authUser(App): ",authUser);
 
   
 

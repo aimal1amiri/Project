@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { authGlobalState } from '../globalState/authGlobalState'
 import {Camera, Mail, User} from 'lucide-react'
 
 const Profile = () => {
 
   const {authUser, changingProfile, uploadImage}= authGlobalState();
+
+  //the state is used to show the new updated profile picture.
+  const [updatedImage, setUpdatedIMage]=useState(null);
 
   const uploadingImage= async(e)=>{
     const imageFile=e.target.files[0]
@@ -17,6 +20,7 @@ const Profile = () => {
 
    imageFileReader.onload = async()=>{
     const image = imageFileReader.result;
+    setUpdatedIMage(image)
     await uploadImage({profilePic: image})
     }
   }
@@ -37,7 +41,7 @@ const Profile = () => {
 
           <div className='flex flex-col items-center gap-4'>
             <div className='relative'>
-              <img src={authUser?.profilePic}
+              <img src={authUser?.profilePic || updatedImage}
               alt='Profile'
               className='size-32 rounded-full object-cover border-4'/>
 
