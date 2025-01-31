@@ -132,8 +132,8 @@ export const profileUpdate = async (req,res) => {
         const {profilePic}=req.body;
         //console.log("backend profile ppic: ", profilePic)
 
-        console.log("userID backend: ",req.body._id)
-        const userID = req.body.user._id
+        console.log("userID backend: ",req.user._id)
+        const userID = req.user._id
 
         
 
