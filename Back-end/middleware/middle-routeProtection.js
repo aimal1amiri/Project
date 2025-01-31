@@ -30,9 +30,11 @@ export const routeProtection = async (req,res,next) =>{
 
         }
 
-        console.log(userVerify)
+        //console.log("it is verifyuser: ",userVerify)
 
         req.user = userVerify
+
+        //console.log("it is req.user and its id: ", req.user._id.toString())
 
         next()
 
