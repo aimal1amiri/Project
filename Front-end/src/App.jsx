@@ -9,10 +9,12 @@ import Setting from './pages/Setting'
 import { authGlobalState } from './globalState/authGlobalState'
 import {Loader} from 'lucide-react'
 import { Toaster } from 'react-hot-toast'
+import { themeGlobalState } from './globalState/themeGlobalState'
 
 const App = () => {
 
   const {authUser, verifyAuth, authChecking}= authGlobalState();
+  const { themeColor }=themeGlobalState();
 
   useEffect(()=>{
     verifyAuth()
@@ -41,7 +43,7 @@ const App = () => {
 
   return (
     
-    <div>
+    <div data-theme={themeColor}>
       
       <Navbar />
       <Toaster/>
