@@ -41,6 +41,8 @@ export const chatGlobalState = create((set) =>({
         }finally{
             set({messagesLoading:false})
         }
-    }
+    },
+
+    setSelectedUser: (selectedUser)=> set({selectedUser}),
 
 }))
