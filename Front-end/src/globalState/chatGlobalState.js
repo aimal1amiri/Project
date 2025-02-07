@@ -15,13 +15,16 @@ export const chatGlobalState = create((set) =>({
         set({usersLoading:true})
 
         try {
-            const response = axiosURL.get("/message/users")
+            const response = axiosURL.get("/v1/message/users")
+            console.log("resp: ", response)
+
 
             set({users:response.data});
+            console.log(users)
 
 
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error.response);
             
         }finally{
             set({usersLoading:false});
@@ -32,7 +35,7 @@ export const chatGlobalState = create((set) =>({
         set({messagesLoading:true})
 
         try {
-            const response = axiosURL.get(`/message/${userId}`)
+            const response = axiosURL.get(`/v1/message/${userId}`)
             set({messages:response.data})
             
         } catch (error) {
