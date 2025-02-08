@@ -2,10 +2,12 @@ import React, { useEffect } from 'react'
 import { chatGlobalState } from '../globalState/chatGlobalState'
 import SidebarLoadingSkeleton from './loadingSkeletons/SidebarLoadingSkeleton';
 import { Users } from 'lucide-react';
+import { authGlobalState } from '../globalState/authGlobalState';
 
 const Sidebar = () => {
 
   const {getUser, users, selectedUser, setSelectedUser, usersLoading}=chatGlobalState();
+  const {onlineUsers}=authGlobalState();
 
   useEffect(()=>{
     getUser()
@@ -15,8 +17,8 @@ const Sidebar = () => {
   
 
   if(usersLoading) return <SidebarLoadingSkeleton/>
-  const onlineUsers = []
-  console.log("users: ",users)
+  
+  
 
   return (
     <aside className='h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200'>
