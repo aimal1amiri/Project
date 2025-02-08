@@ -3,7 +3,7 @@ import { chatGlobalState } from '../globalState/chatGlobalState'
 import MessagesLoadingSkeleton from './loadingSkeletons/MessagesLoadingSkeleton';
 import ChatHeader from './ChatHeader';
 
-const UserChatWindow = () => {
+const ChatBox = () => {
     const {messages, getMessages, messagesLoading, selectedUser}=chatGlobalState();
 
     useEffect (()=> {
@@ -23,4 +23,4 @@ const UserChatWindow = () => {
   )
 }
 
-export default UserChatWindow
+export default ChatBox

@@ -9,6 +9,7 @@ export const authGlobalState = create((set) => ({
     loggingIn:false,
     changingProfile:false,
     authChecking:true,
+    onlineUsers:[],
 
 
     verifyAuth: async() => {
