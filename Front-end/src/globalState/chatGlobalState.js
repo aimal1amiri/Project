@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { axiosURL } from '../lib/Backnd-info-fetching';
 
 
-export const chatGlobalState = create((set) =>({
+export const chatGlobalState = create((set,get) =>({
     messages:[],
     users:[],
     selectedUser:null,
@@ -31,7 +31,7 @@ export const chatGlobalState = create((set) =>({
         }
     },
 
-    getMessages:async ()=>{
+    getMessages:async (userId)=>{
         set({messagesLoading:true})
 
         try {
@@ -41,10 +41,23 @@ export const chatGlobalState = create((set) =>({
             console.log(response)
             
         } catch (error) {
+            console.log("get meesages: ",error)
             toast.error(error.response.message)
             
         }finally{
             set({messagesLoading:false})
+        }
+    },
+
+    sendMessages: async (data)=>{
+        const {selectedUser,messages}=get();
+
+        try {
+            const response = await axiosURL.post(`/v1/message/send/${selectedUser._id}`, data);
+            set({messages:[...messages, response.data]})
+        } catch (error) {
+            toast.error(error.response.data.message)
+            
         }
     },
 

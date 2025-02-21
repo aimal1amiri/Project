@@ -6,14 +6,19 @@ import bcrypt from "bcryptjs"
 export const login= async (req,res)=> {
     
     const {email,password}=req.body;
+    console.log(email, password)
     
     try {
 
         const userEmail= await UserSchema.findOne({email})
 
+        console.log(userEmail)
+
         const userPass = await bcrypt.compare(password, userEmail.password);
 
-        if(!userEmail || !userPass){
+        console.log(userPass)
+
+        if(!userEmail){
             return res.status(400).json({success:false, message:"Invalid Credientials"})
         }else{
 
@@ -34,7 +39,7 @@ export const login= async (req,res)=> {
         
     } catch (error) {
 
-        console.log("login error: ", error.message)
+        console.log("login error (authController): ", error.message)
         res.status(500).json({success:false, message:"Server Error"})
         
     }
