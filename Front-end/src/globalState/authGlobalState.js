@@ -72,6 +72,7 @@ export const authGlobalState = create((set) => ({
         set({loggingIn:true})
 
         try {
+            
             const response= await axiosURL.post("/v1/auth/login",data)
             
             set({authUser:response?.data.data})

@@ -8,6 +8,9 @@ export const messageSend = async (req , res)=>{
 
         const logedInUserId=req.user._id;
 
+        console.log(receverId)
+        console.log(req.user._id)
+
         let imageUrl
 
         if(image){
